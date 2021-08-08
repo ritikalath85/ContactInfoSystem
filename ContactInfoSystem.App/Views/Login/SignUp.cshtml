@@ -1,0 +1,111 @@
+﻿@model ContactInfoSystem.App.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "Sign Up - Contact Information System";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="~/js/SignUp.js"></script>
+<style type="text/css">
+    .form-group .control-label:after {
+        content: "*";
+        color: red;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="SignUp" method="post" asp-controller="Login" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label asp-for="UserFullName" class="control-label">Full Name</label>
+                    <input asp-for="UserFullName" class="form-control" maxlength="250" id="txtUserFullName" />
+                    <span asp-validation-for="UserFullName" class="text-danger"></span>
+
+                </div>
+                <div class="col-sm-4">
+                    <label asp-for="EmailAddress" class="control-label">Email Address</label>
+                    <input asp-for="EmailAddress" class="form-control" maxlength="250" id="txtUserEmail" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label asp-for="Password" class="control-label">Password</label>
+
+                    <input asp-for="Password" class="form-control" type="password" maxlength="20" id="txtPassword" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <span style="color:red;font-size:small;">Only alphabets, numbers and underscore is allowed</span>
+
+                </div>
+                <div class="col-sm-4">
+                    <label asp-for="ConfirmPassword" class="control-label">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" maxlength="20" id="txtConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label asp-for="MobileNo" class="control-label">Mobile No</label>
+                    <input asp-for="MobileNo" class="form-control" type="tel" maxlength="10" id="txtMobileNo" />
+                    <span asp-validation-for="MobileNo" class="text-danger"></span>
+
+
+                </div>
+                <div class="col-sm-4">
+                    <label asp-for="Gender" class="control-label">Gender</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="grpGender" id="rdMale" value="1" onchange="SetGender(this);" checked="checked">
+                        <label class="form-check-label" for="rdMale">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="grpGender" id="rdFemale" value="2" onchange="SetGender(this);">
+                        <label class="form-check-label" for="rdFemale">Female</label>
+                    </div>
+                    <input type="hidden" asp-for="Gender" id="hdnGender" value="1" />
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label asp-for="DesignationId" class="control-label">Designation</label>
+                    <select id="scDesignation" class="form-control" asp-items="@(new SelectList(ViewBag.DesignationList,"Id","Name"))"
+                            asp-for="DesignationId">
+                        <option value="0">-Select Designation-</option>
+                    </select>
+                    <span asp-validation-for="DesignationId" class="text-danger"></span>
+
+
+                </div>
+                <div class="col-sm-4">
+                    <label asp-for="CountryId" class="control-label">Country</label>
+                    <select id="scCountry" class="form-control" asp-items="@(new SelectList(ViewBag.CountryList,"CountryId","CountryName"))" asp-for="CountryId">
+                        <option value="0">-Select Country-</option>
+                    </select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <label asp-for="UserImageName" class="control-label">User Profile Image</label>
+                    <input type="file" class="form-control-file" id="exampleFormControlFile1" asp-for="File">
+                    <span asp-validation-for="UserImageName" class="text-danger"></span>
+                    <input type="hidden" id="hdnfilename" asp-for="UserImageName" />
+                    <span style="color:red;font-size:small;">Only png, jpg and jpeg files of maximum size 2MB is allowed </span>
+                   
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <input type="submit" value="Sign Up" class="btn btn-primary" onclick="return ValidateUser();" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

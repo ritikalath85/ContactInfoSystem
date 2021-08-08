@@ -1,0 +1,112 @@
+﻿@model ContactInfoSystem.Repositories.PagingModel<ContactInfoSystem.Models.UserModel>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Core.Common;
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* pagination */
+    .pagination > li.disabled {
+        opacity: .5;
+    }
+
+    .pagination > li {
+        margin: 0 4px;
+        display: inline-block;
+    }
+
+    .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+        color: #fff;
+        background-color: #f54b5b;
+        border-color: #fff;
+        cursor: default;
+    }
+
+    .pagination > li > a, .pagination > li > span {
+        width: 40px;
+        height: 40px;
+        line-height: 38px;
+        text-align: center;
+        font-size: 18px;
+        z-index: 1;
+        position: relative;
+        background-color: #2196f3;
+        color: #fff;
+        border: 1px solid #fff;
+        cursor: pointer;
+        display: inline-block;
+    }
+</style>
+
+<h1>List of Users</h1>
+
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>SL#</th>
+            <th>
+                Full Name
+            </th>
+            <th>
+                Email ID
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Designation
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                Phone No.
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int cnt = 1;}
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @(((Model.Page - 1)*Model.PageSize)+cnt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+            </tr>
+            cnt = cnt + 1;
+        }
+        <tr>
+            <td colspan="7">
+                @Html.PagedListPager((IPagedList)Model.Data, page => Url.Action("Index", new
+                {
+                    page = page,
+                    pageSize = Model.PageSize
+                }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+            </td>
+        </tr>
+    </tbody>
+</table>

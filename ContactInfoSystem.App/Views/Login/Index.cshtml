@@ -1,0 +1,59 @@
+﻿@model ContactInfoSystem.App.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login - Contact Information System";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .form-group .control-label:after {
+        content: "*";
+        color: red;
+    }
+</style>
+<script type="text/javascript">
+    function ValidateUser() {
+        debugger;
+      
+        var txtUserEmail = $("#txtUserEmail").val();
+        var txtPassword = $("#txtPassword").val();
+       
+
+       if (txtUserEmail == null || txtUserEmail == undefined || txtUserEmail == '') {
+            alert("Please enter Email Address");
+            $("#txtUserEmail").focus();
+            return false;
+        }
+        else if (txtPassword == null || txtPassword == undefined || txtPassword == '') {
+            alert("Please enter password");
+            $("#txtPassword").focus();
+            return false;
+        }
+      
+    }
+</script>
+
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" maxlength="250" id="txtUserEmail"/>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" type="password" maxlength="20" id="txtPassword"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" onclick="return ValidateUser();" />
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
